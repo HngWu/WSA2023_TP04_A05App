@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WSA2023_TP04_A05Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="competitions">
+          <Key>
+            <PropertyRef Name="competition_id" />
+          </Key>
+          <Property Name="competition_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="location" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="participants">
+          <Key>
+            <PropertyRef Name="participant_id" />
+          </Key>
+          <Property Name="participant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="registrations">
+          <Key>
+            <PropertyRef Name="registration_id" />
+          </Key>
+          <Property Name="registration_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="participant_id" Type="int" />
+          <Property Name="competition_id" Type="int" />
+          <Property Name="skill_id" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="skills">
+          <Key>
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="skill_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="16" />
+          <Property Name="password" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <Association Name="FK__registrat__compe__3E52440B">
+          <End Role="competitions" Type="Self.competitions" Multiplicity="0..1" />
+          <End Role="registrations" Type="Self.registrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competitions">
+              <PropertyRef Name="competition_id" />
+            </Principal>
+            <Dependent Role="registrations">
+              <PropertyRef Name="competition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__registrat__parti__3D5E1FD2">
+          <End Role="participants" Type="Self.participants" Multiplicity="0..1" />
+          <End Role="registrations" Type="Self.registrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="participants">
+              <PropertyRef Name="participant_id" />
+            </Principal>
+            <Dependent Role="registrations">
+              <PropertyRef Name="participant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__registrat__skill__3F466844">
+          <End Role="skills" Type="Self.skills" Multiplicity="0..1" />
+          <End Role="registrations" Type="Self.registrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skills">
+              <PropertyRef Name="skill_id" />
+            </Principal>
+            <Dependent Role="registrations">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WSA2023_TP04_A05ModelStoreContainer">
+          <EntitySet Name="competitions" EntityType="Self.competitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="participants" EntityType="Self.participants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="registrations" EntityType="Self.registrations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="skills" EntityType="Self.skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__registrat__compe__3E52440B" Association="Self.FK__registrat__compe__3E52440B">
+            <End Role="competitions" EntitySet="competitions" />
+            <End Role="registrations" EntitySet="registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__registrat__parti__3D5E1FD2" Association="Self.FK__registrat__parti__3D5E1FD2">
+            <End Role="participants" EntitySet="participants" />
+            <End Role="registrations" EntitySet="registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__registrat__skill__3F466844" Association="Self.FK__registrat__skill__3F466844">
+            <End Role="skills" EntitySet="skills" />
+            <End Role="registrations" EntitySet="registrations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WSA2023_TP04_A05Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="competition">
+          <Key>
+            <PropertyRef Name="competition_id" />
+          </Key>
+          <Property Name="competition_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <Property Name="location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="registrations" Relationship="Self.FK__registrat__compe__3E52440B" FromRole="competitions" ToRole="registrations" />
+        </EntityType>
+        <EntityType Name="participant">
+          <Key>
+            <PropertyRef Name="participant_id" />
+          </Key>
+          <Property Name="participant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="registrations" Relationship="Self.FK__registrat__parti__3D5E1FD2" FromRole="participants" ToRole="registrations" />
+        </EntityType>
+        <EntityType Name="registration">
+          <Key>
+            <PropertyRef Name="registration_id" />
+          </Key>
+          <Property Name="registration_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="participant_id" Type="Int32" />
+          <Property Name="competition_id" Type="Int32" />
+          <Property Name="skill_id" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="competition" Relationship="Self.FK__registrat__compe__3E52440B" FromRole="registrations" ToRole="competitions" />
+          <NavigationProperty Name="participant" Relationship="Self.FK__registrat__parti__3D5E1FD2" FromRole="registrations" ToRole="participants" />
+          <NavigationProperty Name="skill" Relationship="Self.FK__registrat__skill__3F466844" FromRole="registrations" ToRole="skills" />
+        </EntityType>
+        <EntityType Name="skill">
+          <Key>
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="skill_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="registrations" Relationship="Self.FK__registrat__skill__3F466844" FromRole="skills" ToRole="registrations" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__registrat__compe__3E52440B">
+          <End Role="competitions" Type="Self.competition" Multiplicity="0..1" />
+          <End Role="registrations" Type="Self.registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competitions">
+              <PropertyRef Name="competition_id" />
+            </Principal>
+            <Dependent Role="registrations">
+              <PropertyRef Name="competition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__registrat__parti__3D5E1FD2">
+          <End Role="participants" Type="Self.participant" Multiplicity="0..1" />
+          <End Role="registrations" Type="Self.registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="participants">
+              <PropertyRef Name="participant_id" />
+            </Principal>
+            <Dependent Role="registrations">
+              <PropertyRef Name="participant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__registrat__skill__3F466844">
+          <End Role="skills" Type="Self.skill" Multiplicity="0..1" />
+          <End Role="registrations" Type="Self.registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skills">
+              <PropertyRef Name="skill_id" />
+            </Principal>
+            <Dependent Role="registrations">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WSA2023_TP04_A05Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="competitions" EntityType="Self.competition" />
+          <EntitySet Name="participants" EntityType="Self.participant" />
+          <EntitySet Name="registrations" EntityType="Self.registration" />
+          <EntitySet Name="skills" EntityType="Self.skill" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK__registrat__compe__3E52440B" Association="Self.FK__registrat__compe__3E52440B">
+            <End Role="competitions" EntitySet="competitions" />
+            <End Role="registrations" EntitySet="registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__registrat__parti__3D5E1FD2" Association="Self.FK__registrat__parti__3D5E1FD2">
+            <End Role="participants" EntitySet="participants" />
+            <End Role="registrations" EntitySet="registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__registrat__skill__3F466844" Association="Self.FK__registrat__skill__3F466844">
+            <End Role="skills" EntitySet="skills" />
+            <End Role="registrations" EntitySet="registrations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WSA2023_TP04_A05ModelStoreContainer" CdmEntityContainer="WSA2023_TP04_A05Entities">
+          <EntitySetMapping Name="competitions">
+            <EntityTypeMapping TypeName="WSA2023_TP04_A05Model.competition">
+              <MappingFragment StoreEntitySet="competitions">
+                <ScalarProperty Name="competition_id" ColumnName="competition_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="participants">
+            <EntityTypeMapping TypeName="WSA2023_TP04_A05Model.participant">
+              <MappingFragment StoreEntitySet="participants">
+                <ScalarProperty Name="participant_id" ColumnName="participant_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registrations">
+            <EntityTypeMapping TypeName="WSA2023_TP04_A05Model.registration">
+              <MappingFragment StoreEntitySet="registrations">
+                <ScalarProperty Name="registration_id" ColumnName="registration_id" />
+                <ScalarProperty Name="participant_id" ColumnName="participant_id" />
+                <ScalarProperty Name="competition_id" ColumnName="competition_id" />
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skills">
+            <EntityTypeMapping TypeName="WSA2023_TP04_A05Model.skill">
+              <MappingFragment StoreEntitySet="skills">
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="WSA2023_TP04_A05Model.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
