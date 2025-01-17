@@ -111,9 +111,9 @@ namespace WSA2023_TP04_A05App
                 return;
             }
 
-            if(phone.Length != 8)
+            if(phone.Length < 8 || phone.Length > 11)
             {
-                MessageBox.Show("Phone number must be between 10 and 11 digits");
+                MessageBox.Show("Phone number must be 8 - 11 digits");
                 nudphoneno.Text = "";
                 return;
             }

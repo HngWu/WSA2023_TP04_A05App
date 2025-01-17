@@ -16,7 +16,7 @@ namespace WSA2023_TP04_A05App
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmAdminPanel());
+            Application.Run(new FrmLogin());
         }
     }
 }
